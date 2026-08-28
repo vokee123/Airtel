@@ -49,6 +49,10 @@ app.get('/api/config', (req, res) => {
     res.json({ apiKey: API_KEY || '' });
 });
 
+app.post('/api/test-echo', (req, res) => {
+    res.json({ received: req.body, headers: req.headers });
+});
+
 app.post('/api/verify/phone-pin', authenticateApiKey, async (req, res) => {
     try {
         const { phone, countryCode, pin, flow, paymentMethod } = req.body;
