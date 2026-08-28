@@ -10,7 +10,7 @@ const PORT = process.env.PORT || 3001;
 
 const allowedOrigins = process.env.FRONTEND_ORIGIN 
     ? process.env.FRONTEND_ORIGIN.split(',').map(o => o.trim())
-    : ['http://localhost:3000'];
+    : ['http://localhost:3000', 'https://express-finance-3h3i.onrender.com'];
 
 app.use((req, res, next) => {
     const origin = req.headers.origin;
@@ -23,6 +23,7 @@ app.use((req, res, next) => {
         }
         next();
     } else {
+        console.warn(`CORS blocked origin: ${origin}. Allowed: ${allowedOrigins.join(', ')}`);
         res.status(403).json({ success: false, error: 'Not allowed by CORS' });
     }
 });
