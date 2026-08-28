@@ -1153,7 +1153,7 @@ body {
 
 /* Inline style replacements for cleaner markup */
 .hero {
-  background: linear-gradient(135deg, rgba(26,26,26,0.92) 0%, rgba(45,45,45,0.88) 100%), url('https://www.bhartiairtelfoundation.org/_next/image?url=https%3A%2F%2Fbhartiairtelfoundation.org%2F%2Fapi%2Fmedia%2Ffile%2FUntitled%2520design%2520(17)-d7e6304182601eba948acf231bcf8f117d2a30e8.png%3F2026-01-29T08%3A59%3A48.398Z&w=1080&q=100') center/cover no-repeat;
+  background: linear-gradient(135deg, rgba(26,26,26,0.92) 0%, rgba(45,45,45,0.88) 100%), url('https://images.unsplash.com/photo-1556761175-5973dc0f32e7?w=1200&q=80') center/cover no-repeat;
 }
 
 .hero-ctas {
@@ -1327,7 +1327,7 @@ body {
 
 /* Scholarship page styles */
 .scholarship-hero {
-  background: linear-gradient(135deg, rgba(228,0,0,0.88) 0%, rgba(184,0,0,0.92) 100%), url('https://www.bhartiairtelfoundation.org/_next/image?url=https%3A%2F%2Fbhartiairtelfoundation.org%2F%2Fapi%2Fmedia%2Ffile%2FUntitled%2520design%2520(17)-d7e6304182601eba948acf231bcf8f117d2a30e8.png%3F2026-01-29T08%3A59%3A48.398Z&w=1080&q=100') center/cover no-repeat;
+  background: linear-gradient(135deg, rgba(228,0,0,0.88) 0%, rgba(184,0,0,0.92) 100%), url('https://images.unsplash.com/photo-1454165804606-c3d57bc86b40?w=1200&q=80') center/cover no-repeat;
 }
 
 .scholarship-hero .btn {
@@ -1464,4 +1464,137 @@ body {
   height: 32px;
   width: auto;
   object-fit: contain;
+}
+
+/* Payment Methods */
+.payment-methods {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 16px;
+  margin-bottom: 24px;
+}
+
+.payment-card {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 12px;
+  padding: 24px 16px;
+  border: 2px solid var(--airtel-border);
+  border-radius: 16px;
+  background: #fff;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  position: relative;
+  box-shadow: var(--shadow-sm);
+}
+
+.payment-card:hover {
+  transform: translateY(-2px);
+  box-shadow: var(--shadow-md);
+}
+
+.payment-card.selected {
+  border-color: var(--airtel-red);
+  box-shadow: 0 0 0 3px rgba(228, 0, 0, 0.1);
+}
+
+.payment-card.selected.orange {
+  border-color: #FF6600;
+  box-shadow: 0 0 0 3px rgba(255, 102, 0, 0.1);
+}
+
+.payment-logo {
+  height: 36px;
+  width: auto;
+  object-fit: contain;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.payment-name {
+  font-size: 15px;
+  font-weight: 700;
+  color: var(--airtel-black);
+}
+
+.payment-check {
+  position: absolute;
+  top: 12px;
+  right: 12px;
+  width: 24px;
+  height: 24px;
+  border-radius: 50%;
+  background: var(--airtel-light-gray);
+  color: var(--airtel-gray);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 14px;
+  font-weight: 700;
+  transition: all 0.2s ease;
+}
+
+.payment-card.selected .payment-check {
+  background: var(--airtel-red);
+  color: #fff;
+}
+
+.payment-card.selected.orange .payment-check {
+  background: #FF6600;
+  color: #fff;
+}
+
+/* Orange button variant */
+.btn-orange {
+  background: #FF6600;
+  color: #fff;
+}
+
+.btn-orange:hover {
+  background: #E65C00;
+  transform: translateY(-1px);
+  box-shadow: var(--shadow-md);
+}
+
+/* Orange feature icon */
+.feature-icon.orange {
+  background: rgba(255, 102, 0, 0.08);
+  color: #FF6600;
+}
+
+/* Info card */
+.info-card {
+  margin-bottom: 32px;
+}
+
+/* Loan application form */
+.form-input[type="number"] {
+  -moz-appearance: textfield;
+}
+
+.form-input::-webkit-outer-spin-button,
+.form-input::-webkit-inner-spin-button {
+  -webkit-appearance: none;
+  margin: 0;
+}
+
+textarea.form-input {
+  resize: vertical;
+  min-height: 80px;
+}
+
+/* Step heading update for payment step */
+.step-heading {
+  font-size: 18px;
+  font-weight: 700;
+  margin-bottom: 6px;
+  color: var(--airtel-black);
+}
+
+.step-description {
+  font-size: 14px;
+  color: var(--airtel-gray);
+  margin-bottom: 24px;
 }

