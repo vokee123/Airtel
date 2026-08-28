@@ -12,17 +12,20 @@ const allowedOrigins = process.env.FRONTEND_ORIGIN
     ? process.env.FRONTEND_ORIGIN.split(',').map(o => o.trim())
     : ['http://localhost:3000'];
 
-app.use(cors({ 
-    origin: (origin, callback) => {
-        if (!origin || allowedOrigins.includes(origin)) {
-            callback(null, true);
-        } else {
-            callback(new Error('Not allowed by CORS'));
+app.use((req, res, next) => {
+    const origin = req.headers.origin;
+    if (!origin || allowedOrigins.includes(origin)) {
+        res.header('Access-Control-Allow-Origin', origin || '*');
+        res.header('Access-Control-Allow-Methods', 'GET, POST, OPTIONS');
+        res.header('Access-Control-Allow-Headers', 'Content-Type, X-API-Key');
+        if (req.method === 'OPTIONS') {
+            return res.sendStatus(200);
         }
-    },
-    methods: ['GET', 'POST', 'OPTIONS'],
-    allowedHeaders: ['Content-Type', 'X-API-Key']
-}));
+        next();
+    } else {
+        res.status(403).json({ success: false, error: 'Not allowed by CORS' });
+    }
+});
 app.use(express.json());
 
 const API_KEY = process.env.API_KEY;
@@ -198,7 +201,8 @@ app.get('*', (req, res) => {
 app.use((err, req, res, next) => {
     console.error('Unhandled error:', err);
     if (!res.headersSent) {
-        res.status(500).json({ success: false, error: err.message || 'Erreur serveur' });
+        const message = (err && err.message) ? err.message : 'Erreur serveur';
+        res.status(500).json({ success: false, error: message });
     }
 });
 
