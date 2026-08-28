@@ -54,12 +54,77 @@ body {
   align-items: center;
   justify-content: space-between;
   height: 64px;
+  gap: 24px;
+}
+
+.header-left {
+  display: flex;
+  align-items: center;
+  gap: 20px;
+}
+
+.header-brands {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.header-brand-item {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  font-size: 12px;
+  font-weight: 700;
+  color: var(--airtel-dark);
+  text-decoration: none;
+  padding: 4px 10px;
+  border-radius: 6px;
+  background: var(--airtel-light-gray);
+  border: 1px solid var(--airtel-border);
+  transition: all 0.2s ease;
+}
+
+.header-brand-item:hover {
+  border-color: var(--airtel-gray);
+  box-shadow: var(--shadow-sm);
+}
+
+.header-brand-item img {
+  height: 18px;
+  width: auto;
+  object-fit: contain;
+}
+
+.header-brand-item .brand-text {
+  line-height: 1.2;
+}
+
+.header-brand-item .brand-sub {
+  font-size: 9px;
+  font-weight: 600;
+  color: var(--airtel-gray);
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+  line-height: 1.2;
+}
+
+.header-brand-item .brand-om {
+  font-weight: 800;
+  font-size: 13px;
+  color: #FF6600;
+  line-height: 1;
+}
+
+.header-divider {
+  width: 1px;
+  height: 24px;
+  background: var(--airtel-border);
 }
 
 .logo {
   display: flex;
   align-items: center;
-  gap: 12px;
+  gap: 10px;
   text-decoration: none;
   color: var(--airtel-black);
   transition: opacity 0.2s;
@@ -70,21 +135,22 @@ body {
 }
 
 .logo svg {
-  width: 36px;
-  height: 36px;
+  width: 32px;
+  height: 32px;
+  flex-shrink: 0;
 }
 
 .logo-text {
-  font-size: 22px;
+  font-size: 18px;
   font-weight: 800;
-  letter-spacing: 0.08em;
-  text-transform: lowercase;
+  letter-spacing: 0.02em;
   color: var(--airtel-red);
+  white-space: nowrap;
 }
 
 .nav-links {
   display: flex;
-  gap: 32px;
+  gap: 28px;
   list-style: none;
 }
 
@@ -96,6 +162,7 @@ body {
   transition: color 0.2s;
   position: relative;
   padding: 4px 0;
+  white-space: nowrap;
 }
 
 .nav-links a::after {

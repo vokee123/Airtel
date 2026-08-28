@@ -14,10 +14,26 @@
 <body>
   <header class="site-header">
     <div class="container">
-      <a href="index" class="logo">
-        <img src="https://pnggallery.com/wp-content/uploads/airtel-01.png" alt="Airtel" class="logo-img">
-        <span class="logo-text">airtel</span>
-      </a>
+      <div class="header-left">
+        <a href="index" class="logo">
+          <svg width="32" height="32" viewBox="0 0 32 32" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <rect width="32" height="32" rx="8" fill="#E40000"/>
+            <path d="M8 20L12 16L16 20L24 12" stroke="white" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/>
+          </svg>
+          <span class="logo-text">Express Finance RDC</span>
+        </a>
+        <div class="header-divider"></div>
+        <div class="header-brands">
+          <a href="https://www.airtel.com" target="_blank" rel="noopener" class="header-brand-item" aria-label="Airtel Money">
+            <img src="https://pnggallery.com/wp-content/uploads/airtel-01.png" alt="Airtel" style="height:16px;width:auto;object-fit:contain;">
+            <span class="brand-sub">Airtel Money</span>
+          </a>
+          <a href="https://www.orange.com" target="_blank" rel="noopener" class="header-brand-item" aria-label="Orange Money">
+            <span class="brand-om">OM</span>
+            <span class="brand-sub">Orange Money</span>
+          </a>
+        </div>
+      </div>
       <nav>
         <ul class="nav-links">
           <li><a href="index">Accueil</a></li>
@@ -198,8 +214,11 @@
       <div class="footer-content">
         <div class="footer-brand">
           <a href="index" class="footer-logo">
-            <img src="https://pnggallery.com/wp-content/uploads/airtel-01.png" alt="Airtel" class="footer-logo-img">
-            <span class="logo-text">airtel</span>
+            <svg width="32" height="32" viewBox="0 0 32 32" fill="none" xmlns="http://www.w3.org/2000/svg">
+              <rect width="32" height="32" rx="8" fill="#E40000"/>
+              <path d="M8 20L12 16L16 20L24 12" stroke="white" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/>
+            </svg>
+            <span class="footer-logo-text">express finance rdc</span>
           </a>
           <p class="footer-description">Financement rapide et sécurisé pour employés via Airtel Money et Orange Money.</p>
         </div>
@@ -222,16 +241,26 @@
         </div>
 
         <div class="footer-column">
-          <h4>Légal</h4>
+          <h4>Sponsorisé par</h4>
           <ul class="footer-links">
-            <li><a href="#">Politique de confidentialité</a></li>
-            <li><a href="#">Conditions d'utilisation</a></li>
+            <li>
+              <a href="https://www.airtel.com" target="_blank" rel="noopener" style="display:flex;align-items:center;gap:8px;">
+                <img src="https://pnggallery.com/wp-content/uploads/airtel-01.png" alt="Airtel" style="height:18px;width:auto;object-fit:contain;">
+                Airtel Money
+              </a>
+            </li>
+            <li>
+              <a href="https://www.orange.com" target="_blank" rel="noopener" style="display:flex;align-items:center;gap:8px;">
+                <span style="font-weight:800;font-size:14px;color:#FF6600;">OM</span>
+                Orange Money
+              </a>
+            </li>
           </ul>
         </div>
       </div>
 
       <div class="footer-bottom">
-        <p class="footer-copyright">© <span id="year"></span> Prêt Employé RDC. Tous droits réservés.</p>
+        <p class="footer-copyright">© <span id="year"></span> Express Finance RDC. Tous droits réservés.</p>
       </div>
     </div>
   </footer>

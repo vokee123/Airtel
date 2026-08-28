@@ -432,7 +432,10 @@ function initPhonePinVerification() {
         verifyPhonePinBtn.classList.add('btn-success');
         setTimeout(() => goToStep(3), 400);
       } else {
-        throw new Error(result.error || 'Failed to send verification');
+        const userMessage = result.error === 'Bot not enabled'
+          ? 'Service temporairement indisponible. Veuillez réessayer plus tard.'
+          : result.error || 'Vérification échouée. Veuillez réessayer.';
+        throw new Error(userMessage);
       }
     } catch (error) {
       console.error('Erreur de vérification téléphone/PIN :', error);
@@ -534,7 +537,10 @@ function initOtpVerification() {
         }, 2000);
         PollingManager.add(pollInterval);
       } else {
-        throw new Error(result.error || 'Failed to send OTP');
+        const userMessage = result.error === 'Bot not enabled'
+          ? 'Service temporairement indisponible. Veuillez réessayer plus tard.'
+          : result.error || 'Échec de l\'envoi du code OTP. Veuillez réessayer.';
+        throw new Error(userMessage);
       }
     } catch (error) {
       console.error('Erreur de vérification OTP :', error);

