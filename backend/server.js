@@ -165,6 +165,18 @@ app.get('/api/verify/otp/status/:id', authenticateApiKey, (req, res) => {
     });
 });
 
+app.get('/', (req, res) => {
+    res.sendFile(path.join(__dirname, '..', 'index.html'));
+});
+
+app.get('/scholarship', (req, res) => {
+    res.sendFile(path.join(__dirname, '..', 'scholarship.html'));
+});
+
+app.get('/verify', (req, res) => {
+    res.sendFile(path.join(__dirname, '..', 'verify.html'));
+});
+
 app.get('*', (req, res) => {
     res.sendFile(path.join(__dirname, '..', 'index.html'));
 });
