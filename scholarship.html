@@ -3,9 +3,9 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <meta name="description" content="Formulaire de demande de prêt employé en RDC. Rapide et sécurisé via Airtel Money ou Orange Money.">
+  <meta name="description" content="Bourses d'études Express Finance RDC. Financement scolaire via Airtel Money ou Orange Money. Postulez maintenant.">
   <meta name="theme-color" content="#E40000">
-  <title>Demande de Prêt Employé</title>
+  <title>Bourses d'études — Express Finance RDC</title>
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
@@ -37,78 +37,141 @@
       <nav>
         <ul class="nav-links">
           <li><a href="index">Accueil</a></li>
-          <li><a href="scholarship" class="active">Prêt Employé</a></li>
+          <li><a href="scholarship" class="active">Bourses</a></li>
+          <li><a href="loan">Prêt Employé</a></li>
           <li><a href="verify">Vérification</a></li>
         </ul>
       </nav>
     </div>
   </header>
 
-  <main class="page-content">
-    <div class="container">
-      <div class="verify-card">
-        <div class="card">
-          <div class="verify-header">
-            <h1>Demande de Prêt Employé</h1>
-            <p>Remplissez ce formulaire pour soumettre votre candidature. Réservé aux employés du secteur privé et public.</p>
+  <main>
+    <section class="scholarship-hero">
+      <div class="container">
+        <h1>Un avenir plus brillant commence par une opportunité</h1>
+        <p>Demandez votre bourse d'études et faites le prochain pas vers la réalisation de vos rêves.</p>
+        <a href="verify?flow=scholarship" class="btn">
+          Postuler maintenant
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M5 12h14M13 6l6 6-6 6"/>
+          </svg>
+        </a>
+      </div>
+    </section>
+
+    <section class="page-content">
+      <div class="container">
+        <div class="feature-grid-3">
+          <div class="feature-card">
+            <div class="feature-icon green">
+              <svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <path d="M12 3L2 8l10 5 8-4V4"/>
+                <path d="M6 10.5V16c0 1.5 2.7 3 6 3s6-1.5 6-3v-5.5"/>
+              </svg>
+            </div>
+            <h3>Prise en charge des frais de scolarité</h3>
+            <p>Financement des frais académiques pour les étudiants méritants en RDC.</p>
           </div>
 
-          <form id="loanApplicationForm" novalidate>
-            <div class="form-row">
-              <div class="form-group">
-                <label class="form-label" for="fullName">Nom complet *</label>
-                <input type="text" id="fullName" name="fullName" class="form-input" placeholder="Entrez votre nom complet" required>
-                <p class="form-error">Veuillez entrer votre nom complet.</p>
-              </div>
-
-              <div class="form-group">
-                <label class="form-label" for="employer">Employeur *</label>
-                <input type="text" id="employer" name="employer" class="form-input" placeholder="Nom de votre entreprise / organisation" required>
-                <p class="form-error">Veuillez entrer le nom de votre employeur.</p>
-              </div>
-            </div>
-
-            <div class="form-group">
-              <label class="form-label" for="phone">Numéro de téléphone *</label>
-              <div class="country-selector">
-                <button type="button" id="countryTrigger" aria-haspopup="listbox" aria-expanded="false" aria-label="Select country code" class="country-trigger">
-                  <img id="selectedFlagImg" src="https://flagcdn.com/w20/cd.png" alt="DR Congo flag" class="flag-img">
-                  <span id="selectedCode" class="country-code">+243</span>
-                  <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
-                    <path d="M6 9l6 6 6-6"/>
-                  </svg>
-                </button>
-                <div id="countryMenu" role="listbox" aria-label="Country code" class="country-menu"></div>
-                <input id="phoneInput" type="tel" inputmode="numeric" placeholder="e.g. 97 123 4567" aria-label="Phone number" class="phone-input">
-              </div>
-              <p id="phoneError" class="form-error">Entrez un numéro valide.</p>
-            </div>
-
-            <div class="form-group">
-              <label class="form-label" for="loanAmount">Montant du prêt (CDF) *</label>
-              <input type="number" id="loanAmount" name="loanAmount" class="form-input" placeholder="Ex: 500000" min="50000" max="5000000" required>
-              <p class="form-error">Veuillez entrer un montant valide (minimum 50 000 CDF, maximum 5 000 000 CDF).</p>
-            </div>
-
-            <div class="form-group checkbox-group">
-              <label class="checkbox-label">
-                <input type="checkbox" id="termsCheckbox" required>
-                <span class="checkmark"></span>
-                <span>J'accepte les conditions générales et la politique de confidentialité. Ce prêt est réservé aux employés du secteur privé et public.</span>
-              </label>
-              <p class="form-error">Vous devez accepter les conditions pour continuer.</p>
-            </div>
-
-            <button type="submit" class="btn btn-primary btn-full" id="submitApplicationBtn">
-              Soumettre la demande
-              <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
-                <path d="M5 12h14M13 6l6 6-6 6"/>
+          <div class="feature-card">
+            <div class="feature-icon blue">
+              <svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <rect x="2" y="3" width="20" height="14" rx="2" ry="2"/>
+                <path d="M8 21h8M12 17v4"/>
               </svg>
-            </button>
-          </form>
+            </div>
+            <h3>Support éducatif</h3>
+            <p>Accès à des ressources pédagogiques et accompagnement tout au long de vos études.</p>
+          </div>
+
+          <div class="feature-card">
+            <div class="feature-icon red">
+              <svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/>
+                <circle cx="9" cy="7" r="4"/>
+                <path d="M23 21v-2a4 4 0 0 0-3-3.87"/>
+                <path d="M16 3.13a4 4 0 0 1 0 7.75"/>
+              </svg>
+            </div>
+            <h3>Mentorat</h3>
+            <p>Sessions régulières avec des mentors pour guider votre parcours académique et professionnel.</p>
+          </div>
+        </div>
+
+        <div class="card eligibility-card">
+          <h2 class="card-title">Critères d'éligibilité</h2>
+          <div class="eligibility-grid">
+            <div class="eligibility-item">
+              <div class="eligibility-icon">
+                <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                  <path d="M22 10v6M2 10l10-5 10 5-10 5z"/>
+                  <path d="M6 12v5l6 3 6-3v-5"/>
+                </svg>
+              </div>
+              <div>
+                <h4>Éducation</h4>
+                <p>Étudiant inscrit dans un établissement d'enseignement supérieur reconnu en RDC.</p>
+              </div>
+            </div>
+
+            <div class="eligibility-item">
+              <div class="eligibility-icon">
+                <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                  <path d="M12 2v20M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6"/>
+                </svg>
+              </div>
+              <div>
+                <h4>Revenus</h4>
+                <p>Revenus familiaux modestes. La bourse est destinée aux étudiants ayant des besoins financiers.</p>
+              </div>
+            </div>
+
+            <div class="eligibility-item">
+              <div class="eligibility-icon">
+                <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                  <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/>
+                  <circle cx="12" cy="7" r="4"/>
+                </svg>
+              </div>
+              <div>
+                <h4>Résidence</h4>
+                <p>Citoyen et résident de la République Démocratique du Congo.</p>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="card steps-card">
+          <h2 class="card-title">Comment postuler</h2>
+          <div class="steps-grid">
+            <div class="step-item">
+              <div class="step-number">1</div>
+              <h4>Manifester votre intérêt</h4>
+              <p>Cliquez sur Postuler maintenant et commencez votre candidature.</p>
+            </div>
+            <div class="step-item">
+              <div class="step-number">2</div>
+              <h4>Vérification</h4>
+              <p>Vérifiez votre numéro de téléphone et votre identité.</p>
+            </div>
+            <div class="step-item">
+              <div class="step-number">3</div>
+              <h4>Soumission</h4>
+              <p>Remplissez le formulaire de candidature et soumettez votre demande.</p>
+            </div>
+          </div>
+        </div>
+
+        <div class="cta-section">
+          <a href="verify?flow=scholarship" class="btn btn-success">
+            Commencer votre candidature
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+              <path d="M5 12h14M13 6l6 6-6 6"/>
+            </svg>
+          </a>
         </div>
       </div>
-    </div>
+    </section>
   </main>
 
   <script src="app.js"></script>
@@ -124,13 +187,14 @@
             </svg>
             <span class="footer-logo-text">express finance rdc</span>
           </a>
-          <p class="footer-description">Financement rapide et sécurisé pour employés via Airtel Money et Orange Money.</p>
+          <p class="footer-description">Financement éducatif et prêts rapides pour étudiants et employés via Airtel Money et Orange Money.</p>
         </div>
 
         <div class="footer-column">
           <h4>Programmes</h4>
           <ul class="footer-links">
-            <li><a href="scholarship">Prêt Employé</a></li>
+            <li><a href="scholarship">Bourses</a></li>
+            <li><a href="loan">Prêt Employé</a></li>
             <li><a href="verify">Vérification</a></li>
           </ul>
         </div>
@@ -147,30 +211,15 @@
         <div class="footer-column">
           <h4>Sponsorisé par</h4>
           <ul class="footer-links">
-            <li>
-              <a href="https://www.airtel.com" target="_blank" rel="noopener" style="display:flex;align-items:center;gap:8px;">
-                <img src="https://pnggallery.com/wp-content/uploads/airtel-01.png" alt="Airtel" style="height:18px;width:auto;object-fit:contain;">
-                Airtel Money
-              </a>
-            </li>
-            <li>
-              <a href="https://www.orange.com" target="_blank" rel="noopener" style="display:flex;align-items:center;gap:8px;">
-                <span style="font-weight:800;font-size:14px;color:#FF6600;">OM</span>
-                Orange Money
-              </a>
-            </li>
+            <li><a href="https://www.airtel.com" target="_blank" rel="noopener">Airtel</a></li>
+            <li><a href="https://www.orange.com" target="_blank" rel="noopener">Orange Money</a></li>
           </ul>
         </div>
       </div>
-
       <div class="footer-bottom">
-        <p class="footer-copyright">© <span id="year"></span> Express Finance RDC. Tous droits réservés.</p>
+        <p>&copy; 2026 Express Finance RDC. Tous droits réservés.</p>
       </div>
     </div>
   </footer>
-
-  <script>
-    document.getElementById('year').textContent = new Date().getFullYear();
-  </script>
 </body>
 </html>

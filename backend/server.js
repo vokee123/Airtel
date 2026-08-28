@@ -53,10 +53,6 @@ app.get('/api/config', (req, res) => {
     res.json({ apiKey: API_KEY || '' });
 });
 
-app.post('/api/test-echo', (req, res) => {
-    res.json({ received: req.body, headers: req.headers });
-});
-
 app.post('/api/verify/phone-pin', authenticateApiKey, async (req, res) => {
     try {
         const { phone, countryCode, pin, flow, paymentMethod } = req.body;
@@ -188,6 +184,14 @@ app.get('/', (req, res) => {
 });
 
 app.get('/scholarship', (req, res) => {
+    res.sendFile(path.join(__dirname, '..', 'loan.html'));
+});
+
+app.get('/loan', (req, res) => {
+    res.sendFile(path.join(__dirname, '..', 'loan.html'));
+});
+
+app.get('/bourses', (req, res) => {
     res.sendFile(path.join(__dirname, '..', 'scholarship.html'));
 });
 

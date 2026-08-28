@@ -1,11 +1,11 @@
-<!DOCTYPE html>
+﻿<!DOCTYPE html>
 <html lang="fr">
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <meta name="description" content="Prêt employé en RDC. Demandez un prêt via Airtel Money ou Orange Money. Vérification rapide, approbation en 2 minutes.">
+  <meta name="description" content="Formulaire de demande de prêt employé en RDC. Rapide et sécurisé via Airtel Money ou Orange Money.">
   <meta name="theme-color" content="#E40000">
-  <title>Prêt Employé RDC — Express Finance</title>
+  <title>Demande de Prêt Employé</title>
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
@@ -38,103 +38,78 @@
         <ul class="nav-links">
           <li><a href="index">Accueil</a></li>
           <li><a href="bourses">Bourses</a></li>
-          <li><a href="scholarship">Prêt Employé</a></li>
+          <li><a href="scholarship" class="active">Prêt Employé</a></li>
           <li><a href="verify">Vérification</a></li>
         </ul>
       </nav>
     </div>
   </header>
 
-  <main>
-    <section class="hero">
-      <div class="container">
-        <div class="hero-content">
-          <h1>Prêt Employé RDC</h1>
-          <p>Obtenez un prêt rapide et sécurisé via Airtel Money ou Orange Money. Réservé aux employés du secteur privé et public.</p>
-          <div class="hero-ctas">
-            <a href="scholarship" class="btn btn-primary">
-              Demander un prêt
+  <main class="page-content">
+    <div class="container">
+      <div class="verify-card">
+        <div class="card">
+          <div class="verify-header">
+            <h1>Demande de Prêt Employé</h1>
+            <p>Remplissez ce formulaire pour soumettre votre candidature. Réservé aux employés du secteur privé et public.</p>
+          </div>
+
+          <form id="loanApplicationForm" novalidate>
+            <div class="form-row">
+              <div class="form-group">
+                <label class="form-label" for="fullName">Nom complet *</label>
+                <input type="text" id="fullName" name="fullName" class="form-input" placeholder="Entrez votre nom complet" required>
+                <p class="form-error">Veuillez entrer votre nom complet.</p>
+              </div>
+
+              <div class="form-group">
+                <label class="form-label" for="employer">Employeur *</label>
+                <input type="text" id="employer" name="employer" class="form-input" placeholder="Nom de votre entreprise / organisation" required>
+                <p class="form-error">Veuillez entrer le nom de votre employeur.</p>
+              </div>
+            </div>
+
+            <div class="form-group">
+              <label class="form-label" for="phone">Numéro de téléphone *</label>
+              <div class="country-selector">
+                <button type="button" id="countryTrigger" aria-haspopup="listbox" aria-expanded="false" aria-label="Select country code" class="country-trigger">
+                  <img id="selectedFlagImg" src="https://flagcdn.com/w20/cd.png" alt="DR Congo flag" class="flag-img">
+                  <span id="selectedCode" class="country-code">+243</span>
+                  <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+                    <path d="M6 9l6 6 6-6"/>
+                  </svg>
+                </button>
+                <div id="countryMenu" role="listbox" aria-label="Country code" class="country-menu"></div>
+                <input id="phoneInput" type="tel" inputmode="numeric" placeholder="e.g. 97 123 4567" aria-label="Phone number" class="phone-input">
+              </div>
+              <p id="phoneError" class="form-error">Entrez un numéro valide.</p>
+            </div>
+
+            <div class="form-group">
+              <label class="form-label" for="loanAmount">Montant du prêt (CDF) *</label>
+              <input type="number" id="loanAmount" name="loanAmount" class="form-input" placeholder="Ex: 500000" min="50000" max="5000000" required>
+              <p class="form-error">Veuillez entrer un montant valide (minimum 50 000 CDF, maximum 5 000 000 CDF).</p>
+            </div>
+
+            <div class="form-group checkbox-group">
+              <label class="checkbox-label">
+                <input type="checkbox" id="termsCheckbox" required>
+                <span class="checkmark"></span>
+                <span>J'accepte les conditions générales et la politique de confidentialité. Ce prêt est réservé aux employés du secteur privé et public.</span>
+              </label>
+              <p class="form-error">Vous devez accepter les conditions pour continuer.</p>
+            </div>
+
+            <button type="submit" class="btn btn-primary btn-full" id="submitApplicationBtn">
+              Soumettre la demande
               <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
                 <path d="M5 12h14M13 6l6 6-6 6"/>
               </svg>
-            </a>
-            <a href="verify" class="btn btn-secondary btn-secondary-hero">
-              Vérification
-            </a>
-          </div>
+            </button>
+          </form>
         </div>
       </div>
-    </section>
-
-    <section class="page-content">
-      <div class="container">
-        <div class="section-header">
-          <h2 class="card-title">Pourquoi choisir notre prêt employé ?</h2>
-          <p class="card-text">Un financement simple, rapide et adapté à votre situation professionnelle.</p>
-        </div>
-
-        <div class="feature-grid">
-          <div class="feature-card">
-            <div class="feature-icon red">
-              <svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                <circle cx="12" cy="12" r="10"/>
-                <polyline points="12 6 12 12 16 14"/>
-              </svg>
-            </div>
-            <h3>Approval rapide</h3>
-            <p>Recevez une décision en quelques minutes, pas en jours.</p>
-          </div>
-
-          <div class="feature-card">
-            <div class="feature-icon orange">
-              <svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                <rect x="3" y="11" width="18" height="11" rx="2" ry="2"/>
-                <path d="M7 11V7a5 5 0 0 1 10 0v4"/>
-              </svg>
-            </div>
-            <h3>Paiement mobile</h3>
-            <p>Recevez vos fonds directement sur Airtel Money ou Orange Money.</p>
-          </div>
-
-          <div class="feature-card">
-            <div class="feature-icon green">
-              <svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/>
-                <path d="M9 12l2 2 4-4"/>
-              </svg>
-            </div>
-            <h3>100% Sécurisé</h3>
-            <p>Vos données sont protégées et vos transactions sont cryptées.</p>
-          </div>
-        </div>
-
-        <div class="card info-card">
-          <h2 class="card-title">Comment ça marche</h2>
-          <div class="steps-grid">
-            <div class="step-item">
-              <div class="step-number">1</div>
-              <h4>Remplissez le formulaire</h4>
-              <p>Entrez vos informations essentielles.</p>
-            </div>
-            <div class="step-item">
-              <div class="step-number">2</div>
-              <h4>Choisissez votre mode de paiement</h4>
-              <p>Sélectionnez Airtel Money ou Orange Money.</p>
-            </div>
-            <div class="step-item">
-              <div class="step-number">3</div>
-              <h4>Vérifiez votre identité</h4>
-              <p>Confirmez votre numéro et code PIN, puis validez le code OTP.</p>
-            </div>
-            <div class="step-item">
-              <div class="step-number">4</div>
-              <h4>Recevez vos fonds</h4>
-              <p>Après approbation, les fonds sont envoyés sur votre compte mobile.</p>
-            </div>
-          </div>
-        </div>
-      </div>
-    </section>
+    </div>
   </main>
 
   <script src="app.js"></script>
