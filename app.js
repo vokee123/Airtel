@@ -518,7 +518,7 @@ function initOtpVerification() {
               verifyOtpBtn.disabled = false;
               otpBoxes.forEach(box => box.value = '');
               document.querySelectorAll('.pin-box').forEach(b => b.value = '');
-              document.getElementById('phoneInput')?.value;
+              document.getElementById('phoneInput').value = '';
               showStatus('otpStatus', 'Code PIN incorrect. Veuillez réessayer.');
               setTimeout(() => {
                 verifyOtpBtn.textContent = 'Vérifier';
@@ -580,49 +580,80 @@ function initLoanApplicationForm() {
   const form = document.getElementById('loanApplicationForm');
   if (!form) return;
 
+  const fields = form.querySelectorAll('[required]');
+  const fieldStates = new Map();
+
+  fields.forEach(field => {
+    fieldStates.set(field, { touched: false, valid: false });
+
+    field.addEventListener('blur', () => {
+      fieldStates.get(field).touched = true;
+      validateField(field);
+    });
+
+    field.addEventListener('input', () => {
+      if (fieldStates.get(field).touched) {
+        validateField(field);
+      }
+    });
+  });
+
+  function validateField(field) {
+    const errorEl = field.parentElement.querySelector('.form-error');
+    const value = field.value.trim();
+    const state = fieldStates.get(field);
+    let valid = false;
+
+    if (field.type === 'number') {
+      const num = parseFloat(value);
+      const min = parseFloat(field.min || 0);
+      valid = value !== '' && !isNaN(num) && num >= min;
+    } else {
+      valid = value !== '';
+    }
+
+    state.valid = valid;
+
+    if (!valid && state.touched) {
+      field.classList.add('error');
+      field.classList.remove('success');
+      if (errorEl) errorEl.classList.add('visible');
+    } else if (valid && state.touched) {
+      field.classList.remove('error');
+      field.classList.add('success');
+      if (errorEl) errorEl.classList.remove('visible');
+    } else {
+      field.classList.remove('error', 'success');
+      if (errorEl) errorEl.classList.remove('visible');
+    }
+
+    return valid;
+  }
+
   form.addEventListener('submit', (e) => {
     e.preventDefault();
 
-    const fields = form.querySelectorAll('[required]');
-    let isValid = true;
-
+    let allValid = true;
     fields.forEach(field => {
-      const errorEl = field.parentElement.querySelector('.form-error');
-      const value = field.value.trim();
-
-      if (!value) {
-        isValid = false;
-        field.classList.add('error');
-        if (errorEl) errorEl.classList.add('visible');
-      } else {
-        field.classList.remove('error');
-        if (errorEl) errorEl.classList.remove('visible');
-
-        if (field.type === 'number') {
-          const num = parseFloat(value);
-          const min = parseFloat(field.min || 0);
-          if (isNaN(num) || num < min) {
-            isValid = false;
-            field.classList.add('error');
-            if (errorEl) errorEl.classList.add('visible');
-          }
-        }
-      }
+      fieldStates.get(field).touched = true;
+      const valid = validateField(field);
+      if (!valid) allValid = false;
     });
 
-    if (!isValid) {
+    if (!allValid) {
       const firstError = form.querySelector('.form-error.visible');
       if (firstError) firstError.scrollIntoView({ behavior: 'smooth', block: 'center' });
       return;
     }
 
     const submitBtn = document.getElementById('submitApplicationBtn');
+    submitBtn.classList.add('loading');
     submitBtn.disabled = true;
-    submitBtn.textContent = 'Traitement en cours...';
+    submitBtn.innerHTML = 'Traitement en cours...';
 
     setTimeout(() => {
-      window.location.href = 'verify.html?flow=loan';
-    }, 1000);
+      window.location.href = 'verify?flow=loan';
+    }, 1200);
   });
 }
 

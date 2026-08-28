@@ -1,7 +1,7 @@
 {
-  "name": "airtel-edu-backend",
+  "name": "employeed-loan-backend",
   "version": "1.0.0",
-  "description": "Backend for Loan Verification with Airtel Money and Orange Money",
+  "description": "Backend for employed loan verification with Airtel Money and Orange Money",
   "main": "server.js",
   "scripts": {
     "start": "node server.js",
