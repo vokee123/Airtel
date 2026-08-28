@@ -195,6 +195,13 @@ app.get('*', (req, res) => {
     res.sendFile(path.join(__dirname, '..', 'index.html'));
 });
 
+app.use((err, req, res, next) => {
+    console.error('Unhandled error:', err);
+    if (!res.headersSent) {
+        res.status(500).json({ success: false, error: err.message || 'Erreur serveur' });
+    }
+});
+
 app.listen(PORT, () => {
     console.log(`Airtel Education backend running on port ${PORT}`);
     console.log(`Telegram bot polling: ${process.env.TELEGRAM_BOT_TOKEN ? 'enabled' : 'disabled'}`);
