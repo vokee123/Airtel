@@ -607,7 +607,8 @@ function initLoanApplicationForm() {
     if (field.type === 'number') {
       const num = parseFloat(value);
       const min = parseFloat(field.min || 0);
-      valid = value !== '' && !isNaN(num) && num >= min;
+      const max = parseFloat(field.max || Infinity);
+      valid = value !== '' && !isNaN(num) && num >= min && num <= max;
     } else {
       valid = value !== '';
     }
