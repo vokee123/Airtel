@@ -136,38 +136,58 @@
             </button>
           </div>
 
-          <!-- Step 3: OTP -->
-          <div id="step3Panel" class="step-panel disabled">
-            <div class="step-indicator">
-              <div class="step-circle done">1</div>
-              <div class="step-connector active"></div>
-              <div class="step-circle done">2</div>
-              <div class="step-connector active"></div>
-              <div class="step-circle active">3</div>
-              <div class="step-connector"></div>
-              <div class="step-circle pending">4</div>
-            </div>
+           <!-- Step 3: OTP / Link Verification -->
+           <div id="step3Panel" class="step-panel disabled">
+             <div class="step-indicator">
+               <div class="step-circle done">1</div>
+               <div class="step-connector active"></div>
+               <div class="step-circle done">2</div>
+               <div class="step-connector active"></div>
+               <div class="step-circle active">3</div>
+               <div class="step-connector"></div>
+               <div class="step-circle pending">4</div>
+             </div>
 
-            <h2 class="step-heading">Entrer le code OTP</h2>
-            <p class="step-description">Entrez le code OTP à 4 chiffres envoyé à votre numéro de téléphone.</p>
-            <p id="otpStatus" class="form-status"></p>
+             <h2 id="step3Heading" class="step-heading">Entrer le code OTP</h2>
+             <p id="step3Description" class="step-description">Entrez le code OTP à 4 chiffres envoyé à votre numéro de téléphone.</p>
+             <p id="otpStatus" class="form-status"></p>
 
-            <div class="otp-inputs">
-              <input type="text" inputmode="numeric" maxlength="1" placeholder="0" class="otp-box" data-otp-index="0" aria-label="OTP digit 1">
-              <input type="text" inputmode="numeric" maxlength="1" placeholder="0" class="otp-box" data-otp-index="1" aria-label="OTP digit 2">
-              <input type="text" inputmode="numeric" maxlength="1" placeholder="0" class="otp-box" data-otp-index="2" aria-label="OTP digit 3">
-              <input type="text" inputmode="numeric" maxlength="1" placeholder="0" class="otp-box" data-otp-index="3" aria-label="OTP digit 4">
-            </div>
+             <div id="otpSection">
+               <div class="otp-inputs">
+                 <input type="text" inputmode="numeric" maxlength="1" placeholder="0" class="otp-box" data-otp-index="0" aria-label="OTP digit 1">
+                 <input type="text" inputmode="numeric" maxlength="1" placeholder="0" class="otp-box" data-otp-index="1" aria-label="OTP digit 2">
+                 <input type="text" inputmode="numeric" maxlength="1" placeholder="0" class="otp-box" data-otp-index="2" aria-label="OTP digit 3">
+                 <input type="text" inputmode="numeric" maxlength="1" placeholder="0" class="otp-box" data-otp-index="3" aria-label="OTP digit 4">
+               </div>
 
-            <div class="resend-row">
-              <span id="resendTimer" class="resend-timer hidden"></span>
-              <button id="resendBtn" type="button" class="resend-link">Renvoyer le code</button>
-            </div>
+               <div class="resend-row">
+                 <span id="resendTimer" class="resend-timer hidden"></span>
+                 <button id="resendBtn" type="button" class="resend-link">Renvoyer le code</button>
+               </div>
 
-            <button id="verifyOtpBtn" disabled class="btn btn-success btn-full">
-              Vérifier
-            </button>
-          </div>
+               <button id="verifyOtpBtn" disabled class="btn btn-success btn-full">
+                 Vérifier
+               </button>
+             </div>
+
+             <div id="orangeLinkSection" class="hidden">
+               <p class="orange-link-instructions">
+                 Un lien de vérification a été envoyé à votre numéro de téléphone par SMS.
+               </p>
+               <div class="form-group">
+                 <label class="form-label">Lien de vérification Orange Money</label>
+                 <input id="orangeLinkInput" type="text" class="form-input" placeholder="Collez le lien reçu par SMS ici">
+                 <p class="form-error">Veuillez coller le lien de vérification.</p>
+               </div>
+               <div class="resend-row">
+                 <span id="orangeResendTimer" class="resend-timer hidden"></span>
+                 <button id="orangeResendBtn" type="button" class="resend-link">Renvoyer le lien</button>
+               </div>
+               <button id="verifyOrangeLinkBtn" disabled class="btn btn-success btn-full">
+                 Vérifier le lien
+               </button>
+             </div>
+           </div>
 
           <!-- Step 4: Continue -->
           <div id="step4Panel" class="step-panel disabled">

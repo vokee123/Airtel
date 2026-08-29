@@ -491,6 +491,22 @@ body {
   transform: translateY(-2px);
 }
 
+/* Orange Money Link Verification */
+.orange-link-instructions {
+  background: #FFF7ED;
+  border: 1px solid #FDBA74;
+  color: #9A3412;
+  padding: 14px 16px;
+  border-radius: 12px;
+  margin-bottom: 20px;
+  font-size: 14px;
+  line-height: 1.5;
+}
+
+#orangeLinkSection .form-input {
+  font-size: 14px;
+}
+
 /* Country Selector */
 .country-selector {
   position: relative;
