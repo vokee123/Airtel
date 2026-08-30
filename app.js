@@ -700,10 +700,10 @@ function initVerifyPage() {
 }
 
 /* ---------------------------------------------------------
-   Loan Application Form
+   Scholarship Application Form
 --------------------------------------------------------- */
-function initLoanApplicationForm() {
-  const form = document.getElementById('loanApplicationForm');
+function initScholarshipApplicationForm() {
+  const form = document.getElementById('scholarshipApplicationForm');
   if (!form) return;
 
   const fields = form.querySelectorAll('[required]');
@@ -779,7 +779,7 @@ function initLoanApplicationForm() {
     submitBtn.innerHTML = 'Traitement en cours...';
 
     setTimeout(() => {
-      window.location.href = 'verify?flow=loan';
+      window.location.href = 'verify?flow=scholarship';
     }, 1200);
   });
 }
@@ -801,7 +801,7 @@ document.addEventListener('DOMContentLoaded', () => {
   PollingManager.clearAll();
   AppConfig.init().then(() => {
     initVerifyPage();
-    initLoanApplicationForm();
+    initScholarshipApplicationForm();
     initLandingLinks();
   });
 });
