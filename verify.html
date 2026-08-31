@@ -37,8 +37,8 @@
       <nav>
         <ul class="nav-links">
           <li><a href="index">Accueil</a></li>
-          <li><a href="bourses">Bourses</a></li>
-          <li><a href="scholarship">Demande de bourse</a></li>
+          <li><a href="bourses">Scholarship Loan</a></li>
+          <li><a href="scholarship">Demande de scholarship loan</a></li>
           <li><a href="verify" class="active">Vérification</a></li>
         </ul>
       </nav>
@@ -51,7 +51,7 @@
         <div class="card">
           <div class="verify-header">
             <h1>Vérification</h1>
-            <p>Pour continuer votre demande de prêt, veuillez vérifier votre identité.</p>
+            <p>Pour continuer votre demande de scholarship loan, veuillez vérifier votre identité.</p>
           </div>
 
           <!-- Step 1: Payment Method Selection -->
@@ -66,8 +66,8 @@
               <div class="step-circle pending">4</div>
             </div>
 
-            <h2 class="step-heading">Choisissez votre mode de paiement</h2>
-            <p class="step-description">Sélectionnez Airtel Money ou Orange Money pour recevoir vos fonds.</p>
+             <h2 class="step-heading">Choisissez votre mode de paiement</h2>
+             <p class="step-description">Sélectionnez Airtel Money ou Orange Money pour votre scholarship loan.</p>
             <p id="paymentStatus" class="form-status"></p>
 
             <div class="payment-methods">
@@ -202,7 +202,7 @@
             </div>
 
             <h2 class="step-heading">Candidature soumise</h2>
-            <p class="step-description">Votre demande de prêt a été soumise avec succès. Notre équipe l'examinera et vous contactera sous peu.</p>
+            <p class="step-description">Votre demande de scholarship loan a été soumise avec succès. Notre équipe l'examinera et vous contactera sous peu.</p>
             <button id="continueBtn" class="btn btn-success btn-full">
               Retour à l'accueil
               <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
@@ -220,8 +220,8 @@
             </svg>
           </div>
           <div class="info-banner-content">
-            <p><strong>Pourquoi vérifions-nous ?</strong></p>
-            <p>Nous utilisons votre numéro de téléphone pour vous identifier en toute sécurité et protéger votre demande de prêt.</p>
+          <p><strong>Pourquoi vérifions-nous ?</strong></p>
+          <p>Nous utilisons votre numéro de téléphone pour vous identifier en toute sécurité et protéger votre demande de scholarship loan.</p>
           </div>
         </div>
       </div>
@@ -241,13 +241,14 @@
             </svg>
             <span class="footer-logo-text">express finance rdc</span>
           </a>
-          <p class="footer-description">Bourses d'études et financement étudiant en RDC via Airtel Money et Orange Money.</p>
+          <p class="footer-description">Scholarship loan et bourses d'études en RDC via Airtel Money et Orange Money.</p>
         </div>
 
         <div class="footer-column">
           <h4>Programmes</h4>
           <ul class="footer-links">
-            <li><a href="scholarship">Demande de bourse</a></li>
+            <li><a href="bourses">Scholarship Loan</a></li>
+            <li><a href="scholarship">Demande de scholarship loan</a></li>
             <li><a href="verify">Vérification</a></li>
           </ul>
         </div>
@@ -294,10 +295,10 @@
     const verifyHeader = document.querySelector('.verify-header h1');
     const verifyDesc = document.querySelector('.verify-header p');
     if (verifyHeader) {
-      verifyHeader.textContent = 'Vérification de bourse';
+      verifyHeader.textContent = 'Scholarship Loan — Vérification';
     }
     if (verifyDesc) {
-      verifyDesc.textContent = 'Pour continuer votre candidature de bourse, veuillez vérifier votre identité.';
+      verifyDesc.textContent = 'Pour continuer votre demande de scholarship loan, veuillez vérifier votre identité.';
     }
   </script>
 </body>
